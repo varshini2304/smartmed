@@ -34,7 +34,9 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
+              MaterialPageRoute(
+                builder: (context) => const RoleSelectionScreen(),
+              ),
             );
           },
         ),
@@ -43,10 +45,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
         foregroundColor: Colors.white,
         title: const Text(
           'Dashboard',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
         ),
         actions: [
           IconButton(
@@ -105,26 +104,40 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         ),
                         const SizedBox(width: 16),
                         Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Welcome back,',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 14,
-                              ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ProfileScreen(
+                                    name: 'John Doe',
+                                    email: 'john.doe@example.com',
+                                    role: 'patient',
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Welcome back,',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  patientName,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              patientName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
@@ -202,16 +215,18 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         'My Appointments',
                         Icons.calendar_today,
                         primaryBlue,
-                            () {
+                        () {
                           Navigator.pushNamed(context, '/patient-appointments');
                         },
-                        badge: upcomingAppointments > 0 ? upcomingAppointments.toString() : null,
+                        badge: upcomingAppointments > 0
+                            ? upcomingAppointments.toString()
+                            : null,
                       ),
                       _buildActionCard(
                         'Medical Records',
                         Icons.folder_open,
                         accentColor,
-                            () {
+                        () {
                           Navigator.pushNamed(context, '/medical-records');
                         },
                       ),
@@ -219,7 +234,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         'Find Doctors',
                         Icons.search,
                         primaryDark,
-                            () {
+                        () {
                           // Navigate to find doctors
                         },
                       ),
@@ -227,7 +242,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         'Emergency',
                         Icons.emergency,
                         errorColor,
-                            () {
+                        () {
                           _showEmergencyDialog();
                         },
                       ),
@@ -297,7 +312,12 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -331,19 +351,19 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
               color: Colors.black87,
             ),
           ),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
-          ),
+          Text(title, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
         ],
       ),
     );
   }
 
-  Widget _buildActionCard(String title, IconData icon, Color color, VoidCallback onTap, {String? badge}) {
+  Widget _buildActionCard(
+    String title,
+    IconData icon,
+    Color color,
+    VoidCallback onTap, {
+    String? badge,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -422,7 +442,12 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
     );
   }
 
-  Widget _buildActivityCard(String title, String subtitle, IconData icon, Color color) {
+  Widget _buildActivityCard(
+    String title,
+    String subtitle,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -463,19 +488,12 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                 ),
               ],
             ),
           ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 16,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey[400]),
         ],
       ),
     );
@@ -489,16 +507,10 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          icon: Icon(
-            Icons.emergency,
-            color: errorColor,
-            size: 48,
-          ),
+          icon: Icon(Icons.emergency, color: errorColor, size: 48),
           title: const Text(
             'Emergency Services',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content: const Text(
             'For medical emergencies, please call emergency services immediately or visit your nearest emergency room.',

@@ -302,26 +302,23 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfileScreen(
-                                name: doctorName,
-                                email: 'doctor@example.com',
-                                role: 'Doctor',
-                              ),
+                      onTap: () {
+                        print('Doctor avatar tapped'); // DEBUG LOG
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              name: doctorName,
+                              email: 'doctor@example.com',
+                              role: 'Doctor',
                             ),
-                          );
-                        },
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Color(0xFF6C4AB6).withOpacity(0.2),
-                          child: const Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.white,
                           ),
+                        );
+                      },
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white,
+                        child: const Icon(Icons.person, size: 30, color: Color(0xFF6C4AB6)),
                         ),
                       ),
                       const SizedBox(width: 15),
