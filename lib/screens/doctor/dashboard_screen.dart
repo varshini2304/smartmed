@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartmed/screens/auth/role_selection_screen.dart';
+import 'package:smartmed/screens/shared/profile_screen.dart';
+
 
 class DashboardStats {
   final String title;
@@ -91,7 +93,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Today's Patients",
       value: "12",
       icon: Icons.people,
-      color: Colors.purple[400]!,
+      color: Color(0xFF6C4AB6),
       change: "+2",
       isPositive: true,
     ),
@@ -99,7 +101,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Pending Reports",
       value: "8",
       icon: Icons.assignment,
-      color: Colors.deepPurple[400]!,
+      color: Color(0xFF6C4AB6),
       change: "-3",
       isPositive: true,
     ),
@@ -107,7 +109,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Prescriptions",
       value: "25",
       icon: Icons.medical_services,
-      color: Colors.purple[600]!,
+      color: Color(0xFF6C4AB6),
       change: "+5",
       isPositive: true,
     ),
@@ -126,7 +128,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "View Appointments",
       subtitle: "Manage today's schedule",
       icon: Icons.calendar_today,
-      color: Colors.purple[500]!,
+      color: Color(0xFF6C4AB6),
       onTap: () {
         Navigator.pushNamed(context, '/doctor-appointments');
       },
@@ -135,7 +137,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Create Prescription",
       subtitle: "Write new prescription",
       icon: Icons.note_add,
-      color: Colors.deepPurple[500]!,
+      color: Color(0xFF6C4AB6),
       onTap: () {
         Navigator.pushNamed(context, '/create-prescription');
       },
@@ -144,7 +146,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Patient Records",
       subtitle: "Access medical history",
       icon: Icons.folder_shared,
-      color: Colors.purple[600]!,
+      color: Color(0xFF6C4AB6),
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Patient Records feature coming soon!')),
@@ -155,7 +157,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Lab Results",
       subtitle: "Review test reports",
       icon: Icons.science,
-      color: Colors.indigo[500]!,
+      color: Color(0xFF6C4AB6),
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Lab Results feature coming soon!')),
@@ -177,7 +179,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       title: "Video Consultation",
       subtitle: "Start telemedicine",
       icon: Icons.video_call,
-      color: Colors.teal[500]!,
+      color: Color(0xFF6C4AB6),
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Video Consultation feature coming soon!')),
@@ -244,17 +246,40 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
             );
           },
         ),
-
-        title: const Text('Dashboard'),
+        elevation: 0,
+        backgroundColor: Color(0xFF6C4AB6),
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Dashboard',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {
+              // Notifications action
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              // Settings action
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
+
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.purple.withOpacity(0.1),
-              Colors.purple.withOpacity(0.05),
+              Color(0xFF6C4AB6).withOpacity(0.1),
+              Color(0xFF6C4AB6).withOpacity(0.05),
               Colors.white,
             ],
           ),
@@ -266,16 +291,37 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
               children: [
                 // Custom App Bar
                 Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6C4AB6),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(32),
+                      bottomRight: Radius.circular(32),
+                    ),
+                  ),
                   padding: const EdgeInsets.all(20),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Colors.purple[100],
-                        child: Icon(
-                          Icons.person,
-                          size: 30,
-                          color: Colors.purple[700],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(
+                                name: doctorName,
+                                email: 'doctor@example.com',
+                                role: 'Doctor',
+                              ),
+                            ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Color(0xFF6C4AB6).withOpacity(0.2),
+                          child: const Icon(
+                            Icons.person,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 15),
@@ -287,7 +333,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                               currentTime,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey[600],
+                                color: Colors.white,
                               ),
                             ),
                             Text(
@@ -295,7 +341,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                               style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -304,7 +350,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                       IconButton(
                         icon: Icon(
                           Icons.notifications_outlined,
-                          color: Colors.purple[700],
+                          color: Color(0xFF6C4AB6),
                           size: 28,
                         ),
                         onPressed: () {
@@ -420,7 +466,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                         children: [
                           Icon(
                             Icons.flash_on,
-                            color: Colors.purple[700],
+                            color: Color(0xFF6C4AB6).withOpacity(0.8),
                             size: 24,
                           ),
                           const SizedBox(width: 8),
@@ -429,7 +475,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple[800],
+                              color: Color(0xFF6C4AB6).withOpacity(0.8),
                             ),
                           ),
                         ],
@@ -524,7 +570,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                         children: [
                           Icon(
                             Icons.history,
-                            color: Colors.purple[700],
+                            color: Color(0xFF6C4AB6),
                             size: 24,
                           ),
                           const SizedBox(width: 8),
@@ -533,7 +579,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.purple[800],
+                              color: Color(0xFF6C4AB6),
                             ),
                           ),
                           const Spacer(),
@@ -546,7 +592,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             child: Text(
                               'View All',
                               style: TextStyle(
-                                color: Colors.purple[600],
+                                color: Color(0xFF6C4AB6),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

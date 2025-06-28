@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartmed/screens/auth/role_selection_screen.dart';
+import 'package:smartmed/screens/shared/profile_screen.dart';
 
 class PatientDashboardScreen extends StatefulWidget {
   const PatientDashboardScreen({super.key});
@@ -10,8 +11,8 @@ class PatientDashboardScreen extends StatefulWidget {
 
 class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
   // Primary color scheme
-  static const Color primaryBlue = Color(0xFF2196F3);
-  static const Color primaryDark = Color(0xFF1976D2);
+  static const Color primaryBlue = Color(0xFF6C4AB6);
+  static const Color primaryDark = Color(0xFF6C4AB6);
   static const Color primaryLight = Color(0xFFE3F2FD);
   static const Color accentColor = Color(0xFF4CAF50);
   static const Color warningColor = Color(0xFFFF9800);
@@ -104,26 +105,26 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         ),
                         const SizedBox(width: 16),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Welcome back,',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Welcome back,',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
                               ),
-                              Text(
-                                patientName,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            Text(
+                              patientName,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
