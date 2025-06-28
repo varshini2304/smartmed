@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartmed/screens/auth/role_selection_screen.dart';
 
 class DashboardStats {
   final String title;
@@ -238,9 +239,12 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
+            );
           },
         ),
+
         title: const Text('Dashboard'),
       ),
       body: Container(

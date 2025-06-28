@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartmed/screens/auth/role_selection_screen.dart';
 
 class PatientDashboardScreen extends StatefulWidget {
   const PatientDashboardScreen({super.key});
@@ -31,7 +32,9 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const RoleSelectionScreen()),
+            );
           },
         ),
         elevation: 0,
