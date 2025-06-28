@@ -1,0 +1,33 @@
+/lib
+│
+├── main.dart
+├── app.dart                         # Root MaterialApp widget
+│
+├── screens/
+│   ├── auth/
+│   │   ├── login_screen.dart
+│   │   ├── signup_screen.dart
+│   │   └── role_selection_screen.dart
+│   ├── doctor/
+│   │   ├── dashboard_screen.dart
+│   │   ├── appointments_screen.dart
+│   │   └── prescription_screen.dart
+│   ├── patient/
+│   │   ├── dashboard_screen.dart
+│   │   ├── appointments_screen.dart
+│   │   └── records_screen.dart
+│   └── shared/
+│       └── profile_screen.dart
+│
+├── widgets/
+│   ├── custom_button.dart
+│   └── input_field.dart
+│
+├── providers/
+│   └── auth_provider.dart
+│
+├── services/
+│   └── firebase_service.dart
+│
+└── models/
+    └── user_model.dart
