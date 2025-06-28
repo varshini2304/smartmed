@@ -1,8 +1,7 @@
 /lib
 │
 ├── main.dart
-├── app.dart                         # Root MaterialApp widget
-│
+├── app.dart                         │
 ├── screens/
 │   ├── auth/
 │   │   ├── login_screen.dart
@@ -31,3 +30,144 @@
 │
 └── models/
     └── user_model.dart
+
+
+
+
+
+
+To build and run your **SmartMed Flutter app** with Firebase, here's a complete list of **dependencies, installations, and setup steps** you should perform:
+
+---
+
+## ✅ 1. **Install Flutter SDK**
+
+If not already installed:
+
+* [Download Flutter](https://docs.flutter.dev/get-started/install)
+* Verify:
+
+```bash
+flutter doctor
+```
+
+---
+
+## ✅ 2. **Create Flutter Project**
+
+```bash
+flutter create smartmed_app
+cd smartmed_app
+```
+
+---
+
+## ✅ 3. **Install Firebase CLI (for setup & hosting)**
+
+```bash
+npm install -g firebase-tools
+firebase login
+```
+
+---
+
+## ✅ 4. **Connect Firebase to Your App**
+
+Use FlutterFire CLI:
+
+```bash
+dart pub global activate flutterfire_cli
+flutterfire configure
+```
+
+This will generate `firebase_options.dart`.
+
+---
+
+## ✅ 5. **Add Dependencies to `pubspec.yaml`**
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.17.0
+  cloud_firestore: ^4.15.0
+  firebase_storage: ^11.7.0
+  provider: ^6.1.2
+  fluttertoast: ^8.2.4
+```
+
+Run:
+
+```bash
+flutter pub get
+```
+
+---
+
+## ✅ 6. **Enable Firebase Services**
+
+In [Firebase Console](https://console.firebase.google.com/):
+
+1. Create a Firebase project
+2. Add Android/iOS apps
+3. Enable:
+
+   * **Authentication** → Email/Password
+   * **Cloud Firestore**
+   * **Firebase Storage**
+4. Download `google-services.json` into `android/app/`
+
+---
+
+## ✅ 7. **Android Firebase Setup**
+
+In `android/build.gradle`:
+
+```gradle
+buildscript {
+  dependencies {
+    classpath 'com.google.gms:google-services:4.3.15'
+  }
+}
+```
+
+In `android/app/build.gradle`:
+
+```gradle
+apply plugin: 'com.google.gms.google-services'
+```
+
+---
+
+## ✅ 8. **Optional (iOS Setup)**
+
+* Add `GoogleService-Info.plist` to `ios/Runner/`
+* Make sure you have CocoaPods:
+
+```bash
+cd ios && pod install
+```
+
+---
+
+## ✅ 9. **Run the App**
+
+```bash
+flutter run
+```
+
+---
+
+### ✅ Bonus Tools for Development
+
+| Tool                         | Purpose                      |
+| ---------------------------- | ---------------------------- |
+| **Flutter DevTools**         | Debug UI and app state       |
+| **Firebase Emulator**        | Test auth, Firestore locally |
+| **VS Code / Android Studio** | Flutter development          |
+
+---
+
+Would you like me to create a one-time **setup checklist file** or shell script that automates all of this on your system?

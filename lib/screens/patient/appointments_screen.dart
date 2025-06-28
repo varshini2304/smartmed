@@ -4,7 +4,8 @@ class PatientAppointmentsScreen extends StatefulWidget {
   const PatientAppointmentsScreen({super.key});
 
   @override
-  State<PatientAppointmentsScreen> createState() => _PatientAppointmentsScreenState();
+  State<PatientAppointmentsScreen> createState() =>
+      _PatientAppointmentsScreenState();
 }
 
 class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
@@ -15,7 +16,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
       'date': 'July 1',
       'time': '9:00 AM',
       'status': 'confirmed',
-      'avatar': 'S'
+      'avatar': 'S',
     },
     {
       'doctor': 'Dr. Meena',
@@ -23,7 +24,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
       'date': 'July 3',
       'time': '4:30 PM',
       'status': 'pending',
-      'avatar': 'M'
+      'avatar': 'M',
     },
     {
       'doctor': 'Dr. Patel',
@@ -31,21 +32,20 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
       'date': 'July 5',
       'time': '11:15 AM',
       'status': 'confirmed',
-      'avatar': 'P'
+      'avatar': 'P',
     },
   ];
 
   // Primary color scheme
-  static const Color primaryBlue = Color(0xFF2196F3);
-  static const Color primaryDark = Color(0xFF1976D2);
-  static const Color primaryLight = Color(0xFFE3F2FD);
+  static const Color primaryBlue = Color(0xFF6C4AB6);
+  static const Color primaryDark = Color(0xFF6C4AB6);
+  static const Color primaryLight = Color(0xFFFFFFFF);
   static const Color accentColor = Color(0xFF4CAF50);
   static const Color warningColor = Color(0xFFFF9800);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -58,10 +58,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         foregroundColor: Colors.white,
         title: const Text(
           'My Appointments',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
         ),
         actions: [
           IconButton(
@@ -72,49 +69,82 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Header section with stats
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: primaryBlue,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color(0xFFFFFFFF), // stronger soft blue
+              const Color(0xDDD5CAED), // stronger lavender
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            // Header section with stats
+            Container(
+              width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF6C4AB6), // deeper primaryBlue
+            Color(0xFF6C4AB6), // deeper lighter purple
+          ],
+        ),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
+        ),
+      ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildStatCard(
+                      'Total',
+                      appointments.length.toString(),
+                      Icons.event,
+                    ),
+                    _buildStatCard(
+                      'Confirmed',
+                      appointments
+                          .where((a) => a['status'] == 'confirmed')
+                          .length
+                          .toString(),
+                      Icons.check_circle,
+                    ),
+                    _buildStatCard(
+                      'Pending',
+                      appointments
+                          .where((a) => a['status'] == 'pending')
+                          .length
+                          .toString(),
+                      Icons.schedule,
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildStatCard('Total', appointments.length.toString(), Icons.event),
-                  _buildStatCard('Confirmed',
-                      appointments.where((a) => a['status'] == 'confirmed').length.toString(),
-                      Icons.check_circle),
-                  _buildStatCard('Pending',
-                      appointments.where((a) => a['status'] == 'pending').length.toString(),
-                      Icons.schedule),
-                ],
+
+            const SizedBox(height: 10),
+
+            // Appointments list
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: appointments.length,
+                itemBuilder: (context, index) {
+                  final appt = appointments[index];
+                  return _buildAppointmentCard(appt, index);
+                },
               ),
             ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Appointments list
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: appointments.length,
-              itemBuilder: (context, index) {
-                final appt = appointments[index];
-                return _buildAppointmentCard(appt, index);
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: primaryBlue,
@@ -132,17 +162,17 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: const Color(0xFFD7D2E1), // solid color instead of gradient
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.white, size: 24),
+          Icon(icon, color: Color(0xFF6C4AB6), size: 24),
           const SizedBox(height: 8),
           Text(
             value,
             style: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFF6C4AB6),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -150,7 +180,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
+              color: Color(0xFF6C4AB6).withOpacity(0.9),
               fontSize: 12,
             ),
           ),
@@ -166,7 +196,14 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFFFFFFFF), // stronger very light blue
+            Color(0xFFFFFFFF), // stronger light lavender
+          ],
+        ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -200,7 +237,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   child: Center(
                     child: Text(
                       appt['avatar'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: primaryDark,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -227,16 +264,16 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                       const SizedBox(height: 4),
                       Text(
                         appt['specialty'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          Icon(Icons.calendar_today,
-                              size: 16, color: primaryBlue),
+                          Icon(
+                            Icons.calendar_today,
+                            size: 16,
+                            color: primaryBlue,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${appt['date']} at ${appt['time']}',
@@ -252,12 +289,14 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   ),
                 ),
 
-                // Status and actions
+                // Status and icon
                 Column(
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: statusColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
@@ -327,7 +366,10 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
               _buildDetailRow('Specialty', appointment['specialty']),
               _buildDetailRow('Date', appointment['date']),
               _buildDetailRow('Time', appointment['time']),
-              _buildDetailRow('Status', appointment['status'].toString().toUpperCase()),
+              _buildDetailRow(
+                'Status',
+                appointment['status'].toString().toUpperCase(),
+              ),
               const SizedBox(height: 20),
               Row(
                 children: [
