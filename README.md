@@ -47,7 +47,7 @@ SmartMed is a comprehensive Flutter-based medical application designed to bridge
       <sub><b>Login Screen</b></sub>
     </td>
     <td align="center">
-      <img src="screenshots/role_selection.png" width="200px" alt="Role Selection"/>
+      <img src="screenshots/role selection.png" width="200px" alt="Role Selection"/>
       <br />
       <sub><b>Role Selection</b></sub>
     </td>
@@ -59,17 +59,17 @@ SmartMed is a comprehensive Flutter-based medical application designed to bridge
   </tr>
   <tr>
     <td align="center">
-      <img src="screenshots/patient_dashboard.png" width="200px" alt="Patient Dashboard"/>
+      <img src="screenshots/patient dashboard.png" width="200px" alt="Patient Dashboard"/>
       <br />
       <sub><b>Patient Dashboard</b></sub>
     </td>
     <td align="center">
-      <img src="screenshots/appointment_screen.png" width="200px" alt="Appointments"/>
+      <img src="screenshots/Patient appointment screen.png" width="200px" alt="Appointments"/>
       <br />
       <sub><b>Appointment Management</b></sub>
     </td>
     <td align="center">
-      <img src="screenshots/medical_records.png" width="200px" alt="Medical Records"/>
+      <img src="screenshots/medical records.png" width="200px" alt="Medical Records"/>
       <br />
       <sub><b>Medical Records</b></sub>
     </td>
