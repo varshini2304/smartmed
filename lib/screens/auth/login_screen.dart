@@ -118,6 +118,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: theme.primaryColor,
+        foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

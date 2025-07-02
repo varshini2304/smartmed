@@ -45,6 +45,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -54,7 +56,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           },
         ),
         elevation: 0,
-        backgroundColor: primaryBlue,
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         title: const Text(
           'My Appointments',
@@ -76,7 +78,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
             end: Alignment.bottomCenter,
             colors: [
               const Color(0xFFFFFFFF), // stronger soft blue
-              const Color(0xDDD5CAED), // stronger lavender
+              theme.primaryColor.withOpacity(0.3), // stronger lavender
             ],
           ),
         ),
@@ -90,8 +92,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF6C4AB6), // deeper primaryBlue
-            Color(0xFF6C4AB6), // deeper lighter purple
+            Colors.white,
+            Colors.white,
           ],
         ),
         borderRadius: const BorderRadius.only(
@@ -100,7 +102,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         ),
       ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -147,7 +149,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: primaryBlue,
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         onPressed: () {
           // Add new appointment
@@ -159,20 +161,21 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   }
 
   Widget _buildStatCard(String title, String value, IconData icon) {
+    final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFD7D2E1), // solid color instead of gradient
+        color: theme.primaryColor, // solid color instead of gradient
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Icon(icon, color: Color(0xFF6C4AB6), size: 24),
+          Icon(icon, color: Colors.white, size: 24),
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
-              color: Color(0xFF6C4AB6),
+            style: TextStyle(
+              color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -180,7 +183,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           Text(
             title,
             style: TextStyle(
-              color: Color(0xFF6C4AB6).withOpacity(0.9),
+              color: Colors.white,
               fontSize: 12,
             ),
           ),
@@ -190,6 +193,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   }
 
   Widget _buildAppointmentCard(Map<String, dynamic> appt, int index) {
+    final theme = Theme.of(context);
     final isConfirmed = appt['status'] == 'confirmed';
     final statusColor = isConfirmed ? accentColor : warningColor;
 
@@ -232,7 +236,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   decoration: BoxDecoration(
                     color: primaryLight,
                     borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: primaryBlue, width: 2),
+                    border: Border.all(color: theme.primaryColor, width: 2),
                   ),
                   child: Center(
                     child: Text(
@@ -272,7 +276,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                           Icon(
                             Icons.calendar_today,
                             size: 16,
-                            color: primaryBlue,
+                            color: theme.primaryColor,
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -327,6 +331,8 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   }
 
   void _showAppointmentDetails(Map<String, dynamic> appointment) {
+    final theme = Theme.of(context);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -376,7 +382,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryBlue,
+                        backgroundColor: theme.primaryColor,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(

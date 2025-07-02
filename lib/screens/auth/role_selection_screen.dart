@@ -264,7 +264,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
             Navigator.of(context).pop();
           },
         ),
-        backgroundColor: Color(0xFF6C4AB6),
+        backgroundColor: theme.primaryColor,
         title: const Text(
           'Role Selection',
           style: TextStyle(color: Colors.white),

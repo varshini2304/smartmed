@@ -27,6 +27,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -41,7 +42,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
           },
         ),
         elevation: 0,
-        backgroundColor: primaryBlue,
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         title: const Text(
           'Dashboard',
@@ -81,14 +82,16 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: primaryBlue,
+                  color: Colors.white,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(32),
                     bottomRight: Radius.circular(32),
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,7 +109,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                               child: Text(
                                 patientName.split(' ').map((n) => n[0]).join(''),
                                 style: TextStyle(
-                                  color: primaryBlue,
+                                  color: theme.primaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -131,18 +134,18 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Welcome back,',
                                     style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 14,
+                                      color: theme.primaryColor,
+                                      fontSize: 19,
                                     ),
                                   ),
                                   Text(
                                     patientName,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
+                                    style: TextStyle(
+                                      color:theme.primaryColor,
+                                      fontSize: 29,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -225,7 +228,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                       _buildActionCard(
                         'My Appointments',
                         Icons.calendar_today,
-                        primaryBlue,
+                        theme.primaryColor,
                         () {
                           Navigator.pushNamed(context, '/patient-appointments');
                         },
@@ -288,7 +291,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                         },
                         child: Text(
                           'View All',
-                          style: TextStyle(color: primaryBlue),
+                          style: TextStyle(color: theme.primaryColor),
                         ),
                       ),
                     ],
@@ -304,7 +307,7 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
                     'Lab Results Available',
                     'Blood test results from June 18, 2025',
                     Icons.science,
-                    primaryBlue,
+                    theme.primaryColor,
                   ),
                   _buildActivityCard(
                     'Prescription Refill',

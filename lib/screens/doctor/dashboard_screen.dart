@@ -247,7 +247,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
           },
         ),
         elevation: 0,
-        backgroundColor: Color(0xFF6C4AB6),
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         title: const Text(
           'Dashboard',
@@ -278,8 +278,8 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF6C4AB6).withOpacity(0.1),
-              Color(0xFF6C4AB6).withOpacity(0.05),
+              theme.primaryColor.withOpacity(0.1),
+              theme.primaryColor.withOpacity(0.05),
               Colors.white,
             ],
           ),
@@ -292,10 +292,12 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                 // Custom App Bar
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF6C4AB6),
+                    color:Colors.white,
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(32),
                       bottomRight: Radius.circular(32),
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32),
                     ),
                   ),
                   padding: const EdgeInsets.all(20),
@@ -317,8 +319,8 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                       },
                       child: CircleAvatar(
                         radius: 25,
-                        backgroundColor: Colors.white,
-                        child: const Icon(Icons.person, size: 30, color: Color(0xFF6C4AB6)),
+                        backgroundColor: theme.primaryColor,
+                        child: Icon(Icons.person, size: 30, color: Colors.white),
                         ),
                       ),
                       const SizedBox(width: 15),
@@ -330,15 +332,15 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                               currentTime,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white,
+                                color: theme.primaryColor,
                               ),
                             ),
                             Text(
                               doctorName,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: theme.primaryColor,
                               ),
                             ),
                           ],
@@ -347,7 +349,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                       IconButton(
                         icon: Icon(
                           Icons.notifications_outlined,
-                          color: Color(0xFF6C4AB6),
+                          color: theme.primaryColor,
                           size: 28,
                         ),
                         onPressed: () {
@@ -359,7 +361,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                     ],
                   ),
                 ),
-
+                const SizedBox(height: 12),
                 // Stats Cards
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -463,7 +465,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                         children: [
                           Icon(
                             Icons.flash_on,
-                            color: Color(0xFF6C4AB6).withOpacity(0.8),
+                            color: theme.primaryColor.withOpacity(0.8),
                             size: 24,
                           ),
                           const SizedBox(width: 8),
@@ -472,7 +474,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF6C4AB6).withOpacity(0.8),
+                              color: theme.primaryColor.withOpacity(0.8),
                             ),
                           ),
                         ],
@@ -567,7 +569,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                         children: [
                           Icon(
                             Icons.history,
-                            color: Color(0xFF6C4AB6),
+                            color: theme.primaryColor,
                             size: 24,
                           ),
                           const SizedBox(width: 8),
@@ -576,7 +578,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF6C4AB6),
+                              color: theme.primaryColor,
                             ),
                           ),
                           const Spacer(),
@@ -589,7 +591,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                             child: Text(
                               'View All',
                               style: TextStyle(
-                                color: Color(0xFF6C4AB6),
+                                color: theme.primaryColor,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
