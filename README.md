@@ -42,7 +42,7 @@ SmartMed is a comprehensive Flutter-based medical application designed to bridge
 <table>
   <tr>
     <td align="center">
-      <img src="screenshots/login_screen.png" width="200px" alt="Login Screen"/>
+      <img src="screenshots/Login screen.png" width="200px" alt="Login Screen"/>
       <br />
       <sub><b>Login Screen</b></sub>
     </td>
@@ -52,7 +52,7 @@ SmartMed is a comprehensive Flutter-based medical application designed to bridge
       <sub><b>Role Selection</b></sub>
     </td>
     <td align="center">
-      <img src="screenshots/doctor_dashboard.png" width="200px" alt="Doctor Dashboard"/>
+      <img src="screenshots/Doctor dashboard.png" width="200px" alt="Doctor Dashboard"/>
       <br />
       <sub><b>Doctor Dashboard</b></sub>
     </td>
@@ -130,36 +130,26 @@ Before running this application, ensure you have the following installed:
 
 ```
 lib/
-├── config/              # Configuration files
-│   ├── database_config.dart
-│   └── app_config.dart
+├── app.dart             # Application setup file
+├── main.dart            # Application entry point
+├── mongodb_options.dart # MongoDB configuration options
 ├── models/              # Data models
-│   ├── user.dart
-│   ├── appointment.dart
-│   ├── prescription.dart
-│   └── medical_record.dart
+│   ├── app_user.dart
+│   └── other model files...
 ├── providers/           # State management
 │   ├── auth_provider.dart
-│   ├── appointment_provider.dart
-│   └── user_provider.dart
+│   └── other provider files...
 ├── screens/             # UI screens
-│   ├── auth/           # Authentication screens
-│   ├── doctor/         # Doctor-specific screens
-│   ├── patient/        # Patient-specific screens
-│   └── shared/         # Shared screens
+│   ├── auth/
+│   ├── doctor/
+│   ├── patient/
+│   └── shared/
 ├── services/            # Business logic & API calls
-│   ├── database_service.dart
-│   ├── auth_service.dart
-│   └── notification_service.dart
-├── utils/               # Utility functions
-│   ├── constants.dart
-│   ├── helpers.dart
-│   └── validators.dart
+│   ├── mongodb_service.dart
+│   └── other service files...
 ├── widgets/             # Reusable UI components
 │   ├── custom_button.dart
-│   ├── loading_widget.dart
-│   └── error_widget.dart
-└── main.dart           # Application entry point
+│   └── other widget files...
 ```
 
 ## 🔧 Configuration
@@ -298,8 +288,7 @@ For support and questions:
 
 - 📧 Email: support@smartmed.app
 - 💬 Discord: [SmartMed Community](https://discord.gg/smartmed)
-- 📖 Documentation: [docs.smartmed.app](https://docs.smartmed.app)
-- 🎫 Issues: [GitHub Issues](https://github.com/yourusername/smartmed/issues)
+- 🎫 Issues: [GitHub Issues](https://github.com/varshini2304/smartmed/issues)
 
 ---
 
