@@ -256,10 +256,6 @@ If you encounter any bugs or have feature requests, please:
     - [ ] Predictive health insights
     - [ ] Population health management
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 
 ## 📞 Support
 
