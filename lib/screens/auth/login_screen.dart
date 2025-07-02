@@ -89,13 +89,6 @@ class _LoginScreenState extends State<LoginScreen>
       // Simulate network delay
       await Future.delayed(const Duration(seconds: 2));
 
-      // TODO: Add Firebase Auth logic here
-      // Example:
-      // await FirebaseAuth.instance.signInWithEmailAndPassword(
-      //   email: _emailController.text.trim(),
-      //   password: _passwordController.text,
-      // );
-
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/role-selection');
       }
@@ -198,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen>
                         const SizedBox(height: 8),
 
                         Text(
-                          'Sign in to continue to your account',
+                          'login to continue to your account',
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: Colors.grey[600],
                           ),
@@ -347,7 +340,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     ),
                                   )
                                       : const Text(
-                                    'Sign In',
+                                    'Login',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,

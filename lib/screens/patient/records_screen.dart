@@ -10,8 +10,8 @@ class MedicalRecordsScreen extends StatefulWidget {
 class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
     with SingleTickerProviderStateMixin {
   // Primary color scheme
-  static const Color primaryBlue = Color(0xFF2196F3);
-  static const Color primaryDark = Color(0xFF1976D2);
+  static const Color primaryBlue = Color(0xFF6C4AB6);
+  static const Color primaryDark = Color(0xFF6C4AB6);
   static const Color primaryLight = Color(0xFFE3F2FD);
   static const Color accentColor = Color(0xFF4CAF50);
   static const Color warningColor = Color(0xFFFF9800);
@@ -280,13 +280,13 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
             child: _filteredRecords.isEmpty
                 ? _buildEmptyState()
                 : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: _filteredRecords.length,
-                    itemBuilder: (context, index) {
-                      final record = _filteredRecords[index];
-                      return _buildRecordCard(record, index);
-                    },
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: _filteredRecords.length,
+              itemBuilder: (context, index) {
+                final record = _filteredRecords[index];
+                return _buildRecordCard(record, index);
+              },
+            ),
           ),
         ],
       ),
@@ -357,7 +357,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () => _buildRecordCard(record, index),
+          onTap: () => _viewRecord(record),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -648,23 +648,23 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryBlue,
-                        foregroundColor: Colors.white,
+                        foregroundColor: primaryBlue,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
                         // Open record
                       },
-                      icon: const Icon(Icons.visibility),
-                      label: const Text('View'),
+                      icon: const Icon(Icons.close),
+                      label: const Text('Close'),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: primaryBlue,
+                        backgroundColor: primaryBlue,
+                        foregroundColor: Colors.white,
                         side: BorderSide(color: primaryBlue),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
