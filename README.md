@@ -147,9 +147,9 @@ lib/
 ├── services/            # Business logic & API calls
 │   ├── mongodb_service.dart
 │   └── other service files...
-├── widgets/             # Reusable UI components
-│   ├── custom_button.dart
-│   └── other widget files...
+|___ widgets/             # Reusable UI components
+    ├── custom_button.dart
+    └── other widget files...
 ```
 
 ## 🔧 Configuration
