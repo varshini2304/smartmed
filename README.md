@@ -261,8 +261,7 @@ If you encounter any bugs or have feature requests, please:
 
 For support and questions:
 
-- 📧 Email: support@smartmed.app
-- 💬 Discord: [SmartMed Community](https://discord.gg/smartmed)
+- 📧 Email: varshini0235@gmail.com
 - 🎫 Issues: [GitHub Issues](https://github.com/varshini2304/smartmed/issues)
 
 ---
