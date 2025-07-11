@@ -527,32 +527,31 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                             ),
                             prefixIcon: const Icon(Icons.search),
                           ),
-
                           items: patients
                               .map(
                                 (patient) => DropdownMenuItem(
-                              value: patient,
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    patient.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  value: patient,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        patient.name,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${patient.age} years, ${patient.gender}',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${patient.age} years, ${patient.gender}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
+                                ),
+                              )
                               .toList(),
                           onChanged: (patient) {
                             setState(() {
@@ -560,7 +559,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                             });
                           },
                           validator: (value) =>
-                          value == null ? 'Please select a patient' : null,
+                              value == null ? 'Please select a patient' : null,
                         ),
                         if (selectedPatient != null) ...[
                           const SizedBox(height: 12),
@@ -593,7 +592,8 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.transparent, // Background of the whole "Diagnosis" section
+                      color: Colors
+                          .transparent, // Background of the whole "Diagnosis" section
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
@@ -632,8 +632,9 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                           decoration: InputDecoration(
                             labelText: 'Primary Diagnosis',
                             hintText: 'Enter the primary diagnosis...',
-                            filled: true,             // <--- Add this
-                            fillColor: Colors.white,  // <--- Add this for white background
+                            filled: true, // <--- Add this
+                            fillColor: Colors
+                                .white, // <--- Add this for white background
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               // Optional: Adjust border color if needed
@@ -730,7 +731,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                       : item.medicineName,
                                   decoration: InputDecoration(
                                     labelText: 'Select Medicine',
-                                    filled: true,             // <--- Add this
+                                    filled: true,
                                     fillColor: Colors.white,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -775,6 +776,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
 
                                 const SizedBox(height: 12),
 
+                                // Dosage & Frequency
                                 Row(
                                   children: [
                                     Expanded(
@@ -782,7 +784,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                         decoration: InputDecoration(
                                           labelText: 'Dosage',
                                           hintText: 'e.g., 1 tablet',
-                                          filled: true,             // <--- Add this
+                                          filled: true,
                                           fillColor: Colors.white,
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
@@ -807,7 +809,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                             : item.frequency,
                                         decoration: InputDecoration(
                                           labelText: 'Frequency',
-                                          filled: true,             // <--- Add this
+                                          filled: true,
                                           fillColor: Colors.white,
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
@@ -840,6 +842,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
 
                                 const SizedBox(height: 12),
 
+                                // Duration & Timing
                                 Row(
                                   children: [
                                     Expanded(
@@ -849,7 +852,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                             : item.duration,
                                         decoration: InputDecoration(
                                           labelText: 'Duration',
-                                          filled: true,             // <--- Add this
+                                          filled: true,
                                           fillColor: Colors.white,
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
@@ -879,53 +882,41 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 8,
-                                        ),
-                                        decoration: BoxDecoration(
-
-                                          border: Border.all(
-                                            color: Colors.grey[400]!,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              'Timing:',
-                                              style: TextStyle(
-                                                color: Colors.grey[600],
-                                              ),
+                                      child: InputDecorator(
+                                        decoration: InputDecoration(
+                                          labelText: 'Timing',
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
                                             ),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: DropdownButton<bool>(
-                                                value: item.beforeMeal,
-                                                underline: const SizedBox(),
-                                                isExpanded: true,
-                                                items: const [
-                                                  DropdownMenuItem(
-                                                    value: true,
-                                                    child: Text('Before meals'),
-                                                  ),
-                                                  DropdownMenuItem(
-                                                    value: false,
-                                                    child: Text('After meals'),
-                                                  ),
-                                                ],
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    item.beforeMeal =
-                                                        value ?? true;
-                                                  });
-                                                },
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                horizontal: 12,
+                                                vertical: 8,
                                               ),
+                                        ),
+                                        child: DropdownButton<bool>(
+                                          value: item.beforeMeal,
+                                          isExpanded: true,
+                                          underline: const SizedBox(),
+                                          items: const [
+                                            DropdownMenuItem(
+                                              value: true,
+                                              child: Text('Before meals'),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: false,
+                                              child: Text('After meals'),
                                             ),
                                           ],
+                                          onChanged: (value) {
+                                            setState(() {
+                                              item.beforeMeal = value ?? true;
+                                            });
+                                          },
                                         ),
                                       ),
                                     ),
@@ -943,7 +934,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    filled: true,             // <--- Add this
+                                    filled: true,
                                     fillColor: Colors.white,
                                     contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 12,
@@ -961,7 +952,6 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 20),
 
                   // Additional Notes
@@ -1000,7 +990,7 @@ class _CreatePrescriptionScreenState extends State<CreatePrescriptionScreen> {
                           controller: notesController,
                           decoration: InputDecoration(
                             labelText: 'Notes & Recommendations',
-                            filled: true,             // <--- Add this
+                            filled: true, // <--- Add this
                             fillColor: Colors.white,
                             hintText:
                                 'Add any additional notes, lifestyle recommendations, or follow-up instructions...',
