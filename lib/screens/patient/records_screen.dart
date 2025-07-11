@@ -150,6 +150,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -160,7 +162,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
           },
         ),
         elevation: 0,
-        backgroundColor: primaryBlue,
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         title: const Text(
           'Medical Records',
@@ -291,7 +293,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: primaryBlue,
+        backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         onPressed: _uploadNewRecord,
         icon: const Icon(Icons.add),
@@ -301,6 +303,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
   }
 
   Widget _buildStatCard(String title, String value, IconData icon) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -316,7 +320,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
       ),
       child: Column(
         children: [
-          Icon(icon, color: primaryBlue, size: 20),
+          Icon(icon, color: theme.primaryColor, size: 20),
           const SizedBox(height: 4),
           Text(
             value,
@@ -339,6 +343,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
   }
 
   Widget _buildRecordCard(Map<String, dynamic> record, int index) {
+    final theme = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -512,6 +518,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
   }
 
   Widget _buildEmptyState() {
+    final theme = Theme.of(context);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -544,7 +552,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
           const SizedBox(height: 24),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: primaryBlue,
+              backgroundColor: theme.primaryColor,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
@@ -558,6 +566,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
   }
 
   Color _getStatusColor(String status) {
+    final theme = Theme.of(context);
+
     switch (status.toLowerCase()) {
       case 'normal':
       case 'clear':
@@ -565,13 +575,15 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
       case 'completed':
         return accentColor;
       case 'active':
-        return primaryBlue;
+        return theme.primaryColor;
       default:
         return warningColor;
     }
   }
 
   void _viewRecord(Map<String, dynamic> record) {
+    final theme = Theme.of(context);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -648,7 +660,7 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
                   Expanded(
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: primaryBlue,
+                        foregroundColor: theme.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () {
@@ -663,9 +675,9 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: primaryBlue,
+                        backgroundColor: theme.primaryColor,
                         foregroundColor: Colors.white,
-                        side: BorderSide(color: primaryBlue),
+                        side: BorderSide(color: theme.primaryColor),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () {
@@ -686,6 +698,8 @@ class _MedicalRecordsScreenState extends State<MedicalRecordsScreen>
   }
 
   Widget _buildDetailRow(String label, String value) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
