@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -236,23 +239,30 @@ class _SignupScreenState extends State<SignupScreen>
     });
 
     try {
-      // Simulate network delay
-      await Future.delayed(const Duration(seconds: 2));
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:5000/api/users/signup'), // or your hosted backend URL
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': _emailController.text.trim(),
+          'password': _passwordController.text.trim(),
+          'role': 'patient', // or 'doctor', etc.
+        }),
+      );
 
-      // TODO: Add Firebase Auth logic here
-      // Example:
-      // UserCredential userCredential = await FirebaseAuth.instance
-      //     .createUserWithEmailAndPassword(
-      //   email: _emailController.text.trim(),
-      //   password: _passwordController.text,
-      // );
-      //
-      // await userCredential.user?.updateDisplayName(
-      //   '${_firstNameController.text} ${_lastNameController.text}',
-      // );
-
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/role-selection');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Signup successful!'),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          Navigator.pushReplacementNamed(context, '/role-selection');
+        }
+      } else {
+        throw Exception(jsonDecode(response.body)['error'] ?? 'Signup failed');
       }
     } catch (e) {
       if (mounted) {

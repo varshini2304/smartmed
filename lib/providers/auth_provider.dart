@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/mongodb_service.dart';
 
 class AuthProvider with ChangeNotifier {
-  final MongoDBService _mongoDBService = MongoDBService('your_mongodb_connection_string');
+  final MongoDBService _mongoDBService = MongoDBService('mongodb+srv://varshini:admin@cluster0.xlcqu.mongodb.net/smartmed');
 
   String? _userId;
   String? _role;
