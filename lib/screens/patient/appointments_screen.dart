@@ -10,31 +10,128 @@ class PatientAppointmentsScreen extends StatefulWidget {
 
 class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   final List<Map<String, dynamic>> appointments = [
-    {
-      'doctor': 'Dr. Sharma',
-      'specialty': 'Cardiologist',
-      'date': 'July 1',
-      'time': '9:00 AM',
-      'status': 'confirmed',
-      'avatar': 'S',
-    },
-    {
-      'doctor': 'Dr. Meena',
-      'specialty': 'Dermatologist',
-      'date': 'July 3',
-      'time': '4:30 PM',
-      'status': 'pending',
-      'avatar': 'M',
-    },
-    {
-      'doctor': 'Dr. Patel',
-      'specialty': 'General Physician',
-      'date': 'July 5',
-      'time': '11:15 AM',
-      'status': 'confirmed',
-      'avatar': 'P',
-    },
-  ];
+  {
+    "doctor": "Dr. Sharma",
+    "specialty": "Cardiologist",
+    "date": "July 1",
+    "time": "9:00 AM",
+    "status": "confirmed",
+    "avatar": "S"
+  },
+  {
+    "doctor": "Dr. Meena",
+    "specialty": "Dermatologist",
+    "date": "July 3",
+    "time": "4:30 PM",
+    "status": "pending",
+    "avatar": "M"
+  },
+  {
+    "doctor": "Dr. Patel",
+    "specialty": "General Physician",
+    "date": "July 5",
+    "time": "11:15 AM",
+    "status": "confirmed",
+    "avatar": "P"
+  },
+  {
+    "doctor": "Dr. Khan",
+    "specialty": "Neurologist",
+    "date": "July 6",
+    "time": "2:00 PM",
+    "status": "cancelled",
+    "avatar": "K"
+  },
+  {
+    "doctor": "Dr. Arora",
+    "specialty": "Orthopedic",
+    "date": "July 8",
+    "time": "10:30 AM",
+    "status": "confirmed",
+    "avatar": "A"
+  },
+  {
+    "doctor": "Dr. Banerjee",
+    "specialty": "Pediatrician",
+    "date": "July 9",
+    "time": "1:00 PM",
+    "status": "pending",
+    "avatar": "B"
+  },
+  {
+    "doctor": "Dr. Chawla",
+    "specialty": "Oncologist",
+    "date": "July 10",
+    "time": "3:45 PM",
+    "status": "confirmed",
+    "avatar": "C"
+  },
+  {
+    "doctor": "Dr. Iyer",
+    "specialty": "ENT Specialist",
+    "date": "July 11",
+    "time": "9:30 AM",
+    "status": "confirmed",
+    "avatar": "I"
+  },
+  {
+    "doctor": "Dr. Reddy",
+    "specialty": "Gastroenterologist",
+    "date": "July 12",
+    "time": "5:00 PM",
+    "status": "pending",
+    "avatar": "R"
+  },
+  {
+    "doctor": "Dr. Nair",
+    "specialty": "Psychiatrist",
+    "date": "July 13",
+    "time": "12:15 PM",
+    "status": "confirmed",
+    "avatar": "N"
+  },
+  {
+    "doctor": "Dr. Joshi",
+    "specialty": "Urologist",
+    "date": "July 14",
+    "time": "2:30 PM",
+    "status": "cancelled",
+    "avatar": "J"
+  },
+  {
+    "doctor": "Dr. Verma",
+    "specialty": "Gynecologist",
+    "date": "July 15",
+    "time": "11:00 AM",
+    "status": "confirmed",
+    "avatar": "V"
+  },
+  {
+    "doctor": "Dr. Saxena",
+    "specialty": "Pulmonologist",
+    "date": "July 16",
+    "time": "3:00 PM",
+    "status": "pending",
+    "avatar": "S"
+  },
+  {
+    "doctor": "Dr. Desai",
+    "specialty": "Ophthalmologist",
+    "date": "July 17",
+    "time": "10:00 AM",
+    "status": "confirmed",
+    "avatar": "D"
+  },
+  {
+    "doctor": "Dr. Bhatt",
+    "specialty": "Endocrinologist",
+    "date": "July 18",
+    "time": "1:30 PM",
+    "status": "confirmed",
+    "avatar": "B"
+  }
+]
+;
 
   // Primary color scheme
   static const Color primaryBlue = Color(0xFF6C4AB6);
