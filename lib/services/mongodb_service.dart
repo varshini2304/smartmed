@@ -1,4 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class MongoDBService {
   final Db db;
@@ -17,13 +19,23 @@ class MongoDBService {
     await db.close();
   }
 
+  String _hashPassword(String password) {
+    final bytes = utf8.encode(password);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
   Future<bool> signIn(String email, String password) async {
     await open();
-    final user = await usersCollection.findOne(
-      where.eq('email', email).eq('password', password),
-    );
+    final user = await usersCollection.findOne(where.eq('email', email));
+    if (user == null) {
+      await close();
+      return false;
+    }
+    final hashedPassword = user['password'] as String;
+    final inputHashed = _hashPassword(password);
     await close();
-    return user != null;
+    return hashedPassword == inputHashed;
   }
 
   Future<String?> signUp(String email, String password, String role) async {
@@ -33,9 +45,10 @@ class MongoDBService {
       await close();
       return null; // already exists
     }
+    final hashedPassword = _hashPassword(password);
     final result = await usersCollection.insertOne({
       'email': email,
-      'password': password,
+      'password': hashedPassword,
       'role': role,
       'createdAt': DateTime.now(),
     });
@@ -43,7 +56,6 @@ class MongoDBService {
     return result.isSuccess ? result.id.toHexString() : null;
   }
 
-  // 🔧 Add this missing method 👇
   Future<String?> getUserRole(String email) async {
     await open();
     final user = await usersCollection.findOne(where.eq('email', email));

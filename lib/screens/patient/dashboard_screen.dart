@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartmed/screens/auth/role_selection_screen.dart';
 import 'package:smartmed/screens/shared/profile_screen.dart';
+import 'package:smartmed/screens/patient/book_appointment.dart';
 
 class PatientDashboardScreen extends StatefulWidget {
   const PatientDashboardScreen({super.key});
@@ -20,10 +21,24 @@ class _PatientDashboardScreenState extends State<PatientDashboardScreen> {
 
   // Sample patient data
   final String patientName = "John Doe";
-  final int upcomingAppointments = 2;
+  int upcomingAppointments = 0;
   final int totalRecords = 15;
   final String nextAppointment = "Today, 2:30 PM";
   final String lastVisit = "June 15, 2025";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAppointmentCount();
+  }
+
+  void _loadAppointmentCount() {
+    final appointments = AppointmentBookingScreen.getStoredAppointments();
+    setState(() {
+      upcomingAppointments = appointments.length;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

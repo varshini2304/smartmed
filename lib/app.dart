@@ -7,6 +7,7 @@ import 'screens/doctor/appointments_screen.dart';
 import 'screens/doctor/prescription_screen.dart';
 import 'screens/patient/dashboard_screen.dart';
 import 'screens/patient/appointments_screen.dart';
+import 'screens/patient/book_appointment.dart';
 import 'screens/patient/records_screen.dart';
 import 'screens/shared/profile_screen.dart';
 
@@ -35,6 +36,7 @@ class SmartMedApp extends StatelessWidget {
         '/create-prescription': (context) => const CreatePrescriptionScreen(),
         '/patient-dashboard': (context) => const PatientDashboardScreen(),
         '/patient-appointments': (context) => const PatientAppointmentsScreen(),
+        '/book-appointment': (context) => const AppointmentBookingScreen(), // Add this route
         '/medical-records': (context) => const MedicalRecordsScreen(),
         '/profile': (context) => const ProfileScreen(
           name: 'Demo User',

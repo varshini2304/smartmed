@@ -8,6 +8,7 @@ void main() {
 
     // Check if login screen elements exist
     expect(find.byType(TextField), findsWidgets); // email/password fields
-    expect(find.text('Login'), findsOneWidget);   // Login button
+    // Use a more specific finder to avoid ambiguity for the Login button
+    expect(find.widgetWithText(ElevatedButton, 'Login'), findsOneWidget);
   });
 }

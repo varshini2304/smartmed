@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert'; // For jsonDecode
-// (Your other imports remain unchanged)
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,20 +29,21 @@ class _LoginScreenState extends State<LoginScreen>
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
-      ),
-    );
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+    ));
 
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: const Interval(0.3, 1.0, curve: Curves.easeOut),
-          ),
-        );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(0.3, 1.0, curve: Curves.easeOut),
+    ));
 
     _animationController.forward();
   }
@@ -78,50 +76,37 @@ class _LoginScreenState extends State<LoginScreen>
     return null;
   }
 
-  /// ✅ MongoDB login connection logic added here
   Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
-    setState(() => _isLoading = true);
+    setState(() {
+      _isLoading = true;
+    });
 
     try {
-      final response = await http.post(
-        Uri.parse('http://10.0.2.2:5000/api/users/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'email': _emailController.text.trim(),
-          'password': _passwordController.text.trim(),
-        }),
-      );
+      // Simulate network delay
+      await Future.delayed(const Duration(seconds: 2));
 
-      final data = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        // Optional: Save token or user info here
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/role-selection');
-        }
-      } else {
-        // Show error
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(data['error'] ?? 'Invalid login'),
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/role-selection');
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text('Login failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
         );
       }
     } finally {
       if (mounted) {
-        setState(() => _isLoading = false);
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -158,9 +143,8 @@ class _LoginScreenState extends State<LoginScreen>
         child: SafeArea(
           child: SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: size.height - MediaQuery.of(context).padding.top,
-              ),
+              constraints: BoxConstraints(minHeight: size.height -
+                  MediaQuery.of(context).padding.top),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: FadeTransition(
@@ -304,8 +288,7 @@ class _LoginScreenState extends State<LoginScreen>
 
                               // Remember Me & Forgot Password
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -345,29 +328,26 @@ class _LoginScreenState extends State<LoginScreen>
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     elevation: 2,
-                                    shadowColor: theme.primaryColor.withOpacity(
-                                      0.3,
-                                    ),
+                                    shadowColor: theme.primaryColor.withOpacity(0.3),
                                   ),
                                   child: _isLoading
                                       ? const SizedBox(
-                                          height: 24,
-                                          width: 24,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                                  Colors.white,
-                                                ),
-                                          ),
-                                        )
+                                    height: 24,
+                                    width: 24,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                  )
                                       : const Text(
-                                          'Login',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
+                                    'Login',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
                               ),
 
@@ -380,9 +360,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     child: Divider(color: Colors.grey[300]),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Text(
                                       'or',
                                       style: TextStyle(
@@ -407,19 +385,12 @@ class _LoginScreenState extends State<LoginScreen>
                                       onPressed: () {
                                         // TODO: Google sign in
                                       },
-                                      icon: const Icon(
-                                        Icons.g_mobiledata,
-                                        size: 24,
-                                      ),
+                                      icon: const Icon(Icons.g_mobiledata, size: 24),
                                       label: const Text('Google'),
                                       style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                        ),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),
                                     ),
@@ -433,13 +404,9 @@ class _LoginScreenState extends State<LoginScreen>
                                       icon: const Icon(Icons.apple, size: 24),
                                       label: const Text('Apple'),
                                       style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                        ),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),
                                     ),

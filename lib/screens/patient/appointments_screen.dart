@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class PatientAppointmentsScreen extends StatefulWidget {
   const PatientAppointmentsScreen({super.key});
@@ -9,32 +12,8 @@ class PatientAppointmentsScreen extends StatefulWidget {
 }
 
 class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
-  final List<Map<String, dynamic>> appointments = [
-    {
-      'doctor': 'Dr. Sharma',
-      'specialty': 'Cardiologist',
-      'date': 'July 1',
-      'time': '9:00 AM',
-      'status': 'confirmed',
-      'avatar': 'S',
-    },
-    {
-      'doctor': 'Dr. Meena',
-      'specialty': 'Dermatologist',
-      'date': 'July 3',
-      'time': '4:30 PM',
-      'status': 'pending',
-      'avatar': 'M',
-    },
-    {
-      'doctor': 'Dr. Patel',
-      'specialty': 'General Physician',
-      'date': 'July 5',
-      'time': '11:15 AM',
-      'status': 'confirmed',
-      'avatar': 'P',
-    },
-  ];
+  List<Map<String, dynamic>> appointments = [];
+  bool _isLoading = true;
 
   // Primary color scheme
   static const Color primaryBlue = Color(0xFF6C4AB6);
@@ -44,9 +23,66 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
   static const Color warningColor = Color(0xFFFF9800);
 
   @override
+  void initState() {
+    super.initState();
+    _loadAppointments();
+  }
+
+  Future<void> _loadAppointments() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? appointmentsString = prefs.getString('appointments');
+      if (appointmentsString != null) {
+        final List<dynamic> decoded = json.decode(appointmentsString);
+        setState(() {
+          appointments = decoded.cast<Map<String, dynamic>>();
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          appointments = [];
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        appointments = [];
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _saveAppointments() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('appointments', json.encode(appointments));
+  }
+
+  Future<void> _deleteAppointment(int index) async {
+    try {
+      setState(() {
+        appointments.removeAt(index);
+      });
+      await _saveAppointments();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Appointment cancelled successfully'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error cancelling appointment: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -64,10 +100,44 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.calendar_today),
-            onPressed: () {
-              // Calendar view action
-            },
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadAppointments,
+          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.calendar_today),
+                onPressed: () {
+                  // Calendar view action
+                },
+              ),
+              if (appointments.isNotEmpty)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '${appointments.length}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -77,85 +147,115 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFFFFFFF), // stronger soft blue
-              theme.primaryColor.withOpacity(0.3), // stronger lavender
+              const Color(0xFFFFFFFF),
+              theme.primaryColor.withOpacity(0.3),
             ],
           ),
         ),
-        child: Column(
-          children: [
-            // Header section with stats
-            Container(
-              width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white,
-            Colors.white,
-          ],
-        ),
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
-      ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildStatCard(
-                      'Total',
-                      appointments.length.toString(),
-                      Icons.event,
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  // Header section with stats
+                  Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.white, Colors.white],
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24),
+                      ),
                     ),
-                    _buildStatCard(
-                      'Confirmed',
-                      appointments
-                          .where((a) => a['status'] == 'confirmed')
-                          .length
-                          .toString(),
-                      Icons.check_circle,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildStatCard(
+                            'Total',
+                            appointments.length.toString(),
+                            Icons.event,
+                          ),
+                          _buildStatCard(
+                            'Confirmed',
+                            appointments
+                                .where((a) => a['status'] == 'confirmed')
+                                .length
+                                .toString(),
+                            Icons.check_circle,
+                          ),
+                          _buildStatCard(
+                            'Pending',
+                            appointments
+                                .where((a) => a['status'] == 'pending')
+                                .length
+                                .toString(),
+                            Icons.schedule,
+                          ),
+                        ],
+                      ),
                     ),
-                    _buildStatCard(
-                      'Pending',
-                      appointments
-                          .where((a) => a['status'] == 'pending')
-                          .length
-                          .toString(),
-                      Icons.schedule,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
 
-            const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-            // Appointments list
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: appointments.length,
-                itemBuilder: (context, index) {
-                  final appt = appointments[index];
-                  return _buildAppointmentCard(appt, index);
-                },
+                  // Appointments list
+                  Expanded(
+                    child: appointments.isEmpty
+                        ? _buildEmptyState()
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: appointments.length,
+                            itemBuilder: (context, index) {
+                              final appt = appointments[index];
+                              return _buildAppointmentCard(appt, index);
+                            },
+                          ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: theme.primaryColor,
         foregroundColor: Colors.white,
         onPressed: () {
-          // Add new appointment
+          Navigator.pushNamed(context, '/book-appointment');
         },
         icon: const Icon(Icons.add),
         label: const Text('Book Appointment'),
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    final theme = Theme.of(context);
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.calendar_today, size: 80, color: Colors.grey[300]),
+          const SizedBox(height: 16),
+          Text(
+            'No Appointments Yet',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Book your first appointment to get started',
+            style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
     );
   }
@@ -165,7 +265,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: theme.primaryColor, // solid color instead of gradient
+        color: theme.primaryColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -174,7 +274,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -182,10 +282,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           ),
           Text(
             title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 12),
           ),
         ],
       ),
@@ -203,10 +300,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFFFFFFFF), // stronger very light blue
-            Color(0xFFFFFFFF), // stronger light lavender
-          ],
+          colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
@@ -223,7 +317,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () {
-            _showAppointmentDetails(appt);
+            _showAppointmentDetails(appt, index);
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -240,7 +334,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      appt['avatar'],
+                      appt['avatar'] ?? appt['doctor'][0],
                       style: const TextStyle(
                         color: primaryDark,
                         fontSize: 24,
@@ -289,6 +383,26 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                           ),
                         ],
                       ),
+                      if (appt['patientName'] != null) ...[
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.person,
+                              size: 16,
+                              color: theme.primaryColor,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              appt['patientName'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -330,7 +444,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
     );
   }
 
-  void _showAppointmentDetails(Map<String, dynamic> appointment) {
+  void _showAppointmentDetails(Map<String, dynamic> appointment, int index) {
     final theme = Theme.of(context);
 
     showModalBottomSheet(
@@ -338,7 +452,7 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: MediaQuery.of(context).size.height * 0.5,
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -372,6 +486,12 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
               _buildDetailRow('Specialty', appointment['specialty']),
               _buildDetailRow('Date', appointment['date']),
               _buildDetailRow('Time', appointment['time']),
+              if (appointment['patientName'] != null)
+                _buildDetailRow('Patient', appointment['patientName']),
+              if (appointment['patientEmail'] != null)
+                _buildDetailRow('Email', appointment['patientEmail']),
+              if (appointment['fee'] != null)
+                _buildDetailRow('Fee', appointment['fee']),
               _buildDetailRow(
                 'Status',
                 appointment['status'].toString().toUpperCase(),
@@ -379,24 +499,6 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.primaryColor,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.edit),
-                      label: const Text('Reschedule'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
@@ -409,9 +511,34 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
                       ),
                       onPressed: () {
                         Navigator.pop(context);
+                        _showCancelDialog(index);
                       },
                       icon: const Icon(Icons.cancel),
                       label: const Text('Cancel'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        // Reschedule functionality could be added here
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Reschedule feature coming soon...'),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text('Reschedule'),
                     ),
                   ),
                 ],
@@ -420,6 +547,46 @@ class _PatientAppointmentsScreenState extends State<PatientAppointmentsScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCancelDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          icon: const Icon(Icons.warning, color: Colors.red, size: 48),
+          title: const Text(
+            'Cancel Appointment',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            'Are you sure you want to cancel this appointment? This action cannot be undone.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Keep Appointment'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _deleteAppointment(index);
+              },
+              child: const Text('Cancel Appointment'),
+            ),
+          ],
+        );
+      },
     );
   }
 
